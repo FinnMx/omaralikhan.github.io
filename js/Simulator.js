@@ -189,7 +189,7 @@ Simulator.prototype.addBlock = function(positionX,positionY,positionZ,
                                         width,length,height)
 {
     var shape = new CANNON.Box(new CANNON.Vec3(width,length,height));
-    var body = new CANNON.Body({ mass: 100 });
+    var body = new CANNON.Body({ mass: 0 });
     body.addShape(shape);
     body.position.set(positionX,positionY,positionZ);
     world.addBody(body);
