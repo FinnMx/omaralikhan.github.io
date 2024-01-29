@@ -5,6 +5,10 @@
  */
 function Simulator()
 {
+    TracyX = 0;
+    TracyY = 10;
+    TracyZ = 2;
+
     /* Demo is used to help manage the scene and integrate the physics engine
     Cannon JS with the graphics engine Three JS */
     demo = new CANNON.Demo();
@@ -70,6 +74,7 @@ function initialiseGui()
     gui.add(robots[0].proximitySensorReading,"left",0,4).listen();
     gui.add(robots[0].proximitySensorReading,"right",0,4).listen();
     gui.add(robots[0].proximitySensorReading,"front",0,4).listen();
+    gui.add(robots[0].proximitySensorReading,"back",0,4).listen();
 
     var self = this;
 
@@ -184,7 +189,7 @@ Simulator.prototype.addBlock = function(positionX,positionY,positionZ,
                                         width,length,height)
 {
     var shape = new CANNON.Box(new CANNON.Vec3(width,length,height));
-    var body = new CANNON.Body({ mass: 1 });
+    var body = new CANNON.Body({ mass: 100 });
     body.addShape(shape);
     body.position.set(positionX,positionY,positionZ);
     world.addBody(body);
@@ -291,7 +296,7 @@ Simulator.prototype.getTracyPosition = function()
  */
 Simulator.prototype.handleKeyboardInput = function(event)
 {
-            var maxForce = 20;
+            var maxForce = 5;
             var rotationForce = 20;
             var up = (event.type == 'keyup');
 
@@ -309,6 +314,10 @@ Simulator.prototype.handleKeyboardInput = function(event)
             switch(event.keyCode)
             {
                 case 38: // forward
+                //different way to move Tracy, updates positions, no friction or roll or drift e.t.c
+                    //TracyX += 0.1;
+                    //robots[0].chassisBody.position.set(TracyX,TracyY,TracyZ);
+
                     robots[0].vehicle.applyEngineForce(up ? 0 : maxForce, 2);
                     robots[0].vehicle.applyEngineForce(up ? 0 : maxForce, 3);
                     break;

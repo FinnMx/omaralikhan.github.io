@@ -19,7 +19,7 @@ function Tracy(x,y,z)
         directionLocal: new CANNON.Vec3(0, 0, -1),
         suspensionStiffness: 30,
         suspensionRestLength: 0.3,
-        frictionSlip: 1,
+        frictionSlip: 20,
         dampingRelaxation: 2.3,
         dampingCompression: 4.4,
         maxSuspensionForce: 100000,
@@ -52,7 +52,7 @@ function Tracy(x,y,z)
     for(var i=0; i<this.vehicle.wheelInfos.length; i++){
         var wheel = this.vehicle.wheelInfos[i];
         var cylinderShape = new CANNON.Cylinder(wheel.radius, wheel.radius, wheel.radius / 2, 20);
-        var wheelBody = new CANNON.Body({ mass: 0 });
+        var wheelBody = new CANNON.Body({ mass: 100 });
         wheelBody.type = CANNON.Body.KINEMATIC;
         wheelBody.collisionFilterGroup = 0;
         var q = new CANNON.Quaternion();
@@ -69,13 +69,14 @@ function Tracy(x,y,z)
         this.chassisBody.velocity.vsub(previousVelocity,this.acceleration);
         previousVelocity.copy(this.chassisBody.velocity);
     }
-    setInterval(updateAccelerometerReadings.bind(this),500);
+    setInterval(updateAccelerometerReadings.bind(this),10);
 
     /* Update proximity sensors readings every 500 ms */
     this.proximitySensorReading = {
         left: 0,
         right: 0,
-        front: 0
+        front: 0,
+        back: 0
     }
     function updateProximitySensorReadings()
     {
@@ -83,8 +84,9 @@ function Tracy(x,y,z)
         this.proximitySensorReading.front = updatedReading.front;
         this.proximitySensorReading.left = updatedReading.left;
         this.proximitySensorReading.right = updatedReading.right;
+        this.proximitySensorReading.back = updatedReading.back;
     }
-    setInterval(updateProximitySensorReadings.bind(this),500);
+    setInterval(updateProximitySensorReadings.bind(this),50);
 
 
     /* Update gyroscope sensor readings every 500 ms */
@@ -235,7 +237,8 @@ Tracy.prototype.getProximitySensorReading = function()
     {
         left: 0,
         right: 0,
-        front: 0
+        front: 0,
+        back: 0
     }
 
     /* The radius of the arc */
@@ -277,9 +280,10 @@ Tracy.prototype.getProximitySensorReading = function()
 
     /* Create an arc in each of the front, right and left directions such that the arc is centered
     around the angles 0(front) 90(right) and 270(left) */
-    sensorReadings.front = getSensorReading(0-sensorHalfAngle,0+sensorHalfAngle);
-    sensorReadings.right = getSensorReading(90-sensorHalfAngle,90+sensorHalfAngle);
-    sensorReadings.left = getSensorReading(270-sensorHalfAngle,270+sensorHalfAngle);
+    sensorReadings.front = getSensorReading(270-sensorHalfAngle,270+sensorHalfAngle);
+    sensorReadings.right = getSensorReading(0-sensorHalfAngle,0+sensorHalfAngle);
+    sensorReadings.back = getSensorReading(90-sensorHalfAngle,90+sensorHalfAngle);
+    sensorReadings.left = getSensorReading(180-sensorHalfAngle,180+sensorHalfAngle);
 
     return sensorReadings;
 }
