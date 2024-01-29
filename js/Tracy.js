@@ -6,7 +6,7 @@
 function Tracy(x,y,z)
 {
     /* Physical body of Tracy along with its corresponding shape */
-    this.chassisShape = new CANNON.Box(new CANNON.Vec3(0.9, 0.7,0.2));
+    this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, 0.7,0.2));
     this.chassisBody = new CANNON.Body({ mass: 5 });
     this.chassisBody.position.set(x,y,z);
     this.chassisBody.quaternion.setFromAxisAngle(
