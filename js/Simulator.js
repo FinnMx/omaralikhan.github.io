@@ -197,6 +197,27 @@ Simulator.prototype.addBlock = function(positionX,positionY,positionZ,
 }
 
 /**
+ * Add a house
+ * at position x, y, z to the world.
+ * @method addHouse
+ * @param {Float} positionX The x coordinate of where the block will be placed.
+ * @param {Float} positionY The y coordinate of where the block will be placed.
+ * @param {Float} positionZ The z coordinate of where the block will be placed.
+ * @param {Float} width     The width of the block to be added.
+ * @param {Float} length    The length of the block to be added.
+ * @param {Float} height    The height of the block to be added.
+ */ 
+Simulator.prototype.addHouse = function(positionX,positionY,positionZ)
+{
+var shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
+var body = new CANNON.Body({ mass: 0 });
+body.addShape(shape);
+body.position.set(positionX,positionY,positionZ);
+world.addBody(body);
+demo.addVisual(body);
+}
+
+/**
  * Create a ramp of dimensions 20x5x0.5 that is tilted at an angle of 30 degrees. The purpose
  * of the ramp is to allow testing the sensors of Tracy in the Z axis.
  * @method addRamp
@@ -346,3 +367,4 @@ Simulator.prototype.handleKeyboardInput = function(event)
                     break;
             }
 }
+

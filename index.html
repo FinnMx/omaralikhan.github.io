@@ -1,113 +1,116 @@
 <html>
- <meta charset="UTF-8"> 
-    <head>
-        <title>Zumo 32U4 (Tracy) Simulator</title>
-        <style>
-            body { margin: 0; }
-            canvas { width: 100%; height: 100% }
-        </style>
-    </head>
-    <body>
-        <script src="lib/Three.js"></script>
-        <script src="lib/cannon.js"></script>
-        <script src="lib/cannon.demo.js"></script>
-        <script src="lib/dat.gui.js"></script>
-        <script src="lib/TrackballControls.js"></script>
-        <script src="lib/Detector.js"></script>
-        <script src="js/Tracy.js"></script>
-        <script src="js/Simulator.js"></script>
-        <script>
+  <meta charset="UTF-8" />
+  <head>
+    <title>Zumo 32U4 (Tracy) Simulator</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="lib/Three.js"></script>
+    <script src="lib/cannon.js"></script>
+    <script src="lib/cannon.demo.js"></script>
+    <script src="lib/dat.gui.js"></script>
+    <script src="lib/TrackballControls.js"></script>
+    <script src="lib/Detector.js"></script>
+    <script src="js/Tracy.js"></script>
+    <script src="js/Simulator.js"></script>
+    <script>
+      //how to add meshes in THREE https://www.youtube.com/watch?v=RYWMKucBDiI&t=451s
+      //https://github.com/SuboptimalEng/three-js-tutorials/blob/main/16-physics-part-02/src/App.jsx
 
-        function Drawroundabout(x, y,r)
-        {
-            let PI = 3.1415926535;
-            let i, angle, x1, y1;
+      function Drawroundabout(x, y, r) {
+        let PI = 3.1415926535;
+        let i, angle, x1, y1;
 
-            for(i = 0; i < 360; i++)
-            {
-                if((i > 80 && i < 150) || (i > 240 && i < 330) ){
-                }else{
-                    angle = i;
-                    x1 = r * Math.cos(angle * PI / 180);
-                    y1 = r * Math.sin(angle * PI / 180);
-                    simulator.addBlock(x + x1,y + y1,3,0.1,0.1,2,2);
-                    //putpixel(x + x1, y + y1, color);
-                }
-            }
+        for (i = 0; i < 360; i++) {
+          if ((i > 80 && i < 150) || (i > 240 && i < 330)) {
+          } else {
+            angle = i;
+            x1 = r * Math.cos((angle * PI) / 180);
+            y1 = r * Math.sin((angle * PI) / 180);
+            simulator.addBlock(x + x1, y + y1, 3, 0.1, 0.1, 2, 2);
+            //putpixel(x + x1, y + y1, color);
+          }
         }
+      }
 
-        function DrawCircle(x,y,r)
-        {
-            let PI = 3.1415926535;
-            let i, angle, x1, y1;
+      function DrawCircle(x, y, r) {
+        let PI = 3.1415926535;
+        let i, angle, x1, y1;
 
-            for(i = 0; i < 360; i++)
-            {
-                    angle = i;
-                    x1 = r * Math.cos(angle * PI / 180);
-                    y1 = r * Math.sin(angle * PI / 180);
-                    simulator.addBlock(x + x1,y + y1,3,0.1,0.1,2,2);
-                    
-            }
+        for (i = 0; i < 360; i++) {
+          angle = i;
+          x1 = r * Math.cos((angle * PI) / 180);
+          y1 = r * Math.sin((angle * PI) / 180);
+          simulator.addBlock(x + x1, y + y1, 3, 0.1, 0.1, 2, 2);
         }
-        var simulator = new Simulator();
-        var tracy = new Tracy(14,-6.8,3);
-        simulator.addTracy(tracy);
+      }
+      var simulator = new Simulator();
+      var tracy = new Tracy(14, -6.8, 3);
+      simulator.addTracy(tracy);
 
-        //definitions of the maze
-        // WIDTH OF STREETS = 1.26
-        // WIDTH OF TRACY 1.05
-        simulator.addBlock(0,-15,3,15,0.1,2,2);
+      //definitions of the maze
+      // WIDTH OF STREETS = 1.26
+      // WIDTH OF TRACY 1.05
+      simulator.addBlock(0, -15, 3, 15, 0.1, 2, 2);
 
-        //left outer wall
-        simulator.addBlock(15,5,3,0.1,10,2,2);
-        simulator.addBlock(15,-11.9,3,0.1,3,2,2);
+      //left outer wall
+      simulator.addBlock(15, 5, 3, 0.1, 10, 2, 2);
+      simulator.addBlock(15, -11.9, 3, 0.1, 3, 2, 2);
 
-        //red house
-        simulator.addBlock(11.9,-9,3,3,0.1,2,2);
-        simulator.addBlock(8.8,-9.4,3,0.1,0.5,2,2);
-        simulator.addBlock(8.8,-13.9,3,0.1,1,2,2);
+      //red house
+      simulator.addBlock(11.9, -9, 3, 3, 0.1, 2, 2);
+      simulator.addBlock(8.8, -9.4, 3, 0.1, 0.5, 2, 2);
+      simulator.addBlock(8.8, -13.9, 3, 0.1, 1, 2, 2);
 
-        //blue house
-        simulator.addBlock(11.9,-5,3,3,0.1,2,2);
-        simulator.addBlock(8.8,-4.1,3,0.1,1,2,2);
-        simulator.addBlock(11.9,0.9,3,3,0.1,2,2);
-        simulator.addBlock(8.8,6,3,0.1,5,2,2);
+      //blue house
+      simulator.addBlock(11.9, -5, 3, 3, 0.1, 2, 2);
+      simulator.addBlock(8.8, -4.1, 3, 0.1, 1, 2, 2);
+      simulator.addBlock(11.9, 0.9, 3, 3, 0.1, 2, 2);
+      simulator.addBlock(8.8, 6, 3, 0.1, 5, 2, 2);
 
-        //yellow house
-        simulator.addBlock(-3,-9,3,6,0.1,2,2);
-        simulator.addBlock(2.9,-12,3,0.1,2.9,2,2);
-        simulator.addBlock(-8.9,-13.9,3,0.1,1,2,2);
-        simulator.addBlock(-8.9,-9.6,3,0.1,0.5,2,2);
+      //yellow house
+      simulator.addBlock(-3, -9, 3, 6, 0.1, 2, 2);
+      simulator.addBlock(2.9, -12, 3, 0.1, 2.9, 2, 2);
+      simulator.addBlock(-8.9, -13.9, 3, 0.1, 1, 2, 2);
+      simulator.addBlock(-8.9, -9.6, 3, 0.1, 0.5, 2, 2);
 
-        //green house
-        simulator.addBlock(-3,-5,3,6,0.1,2,2);
-        simulator.addBlock(2.9,-1.7,3,0.1,3.3,2,2);
-        simulator.addBlock(-3.8,3.15,3,5.2,0.1,2,2);
-        simulator.addBlock(-8.9,-2.9,3,0.1,2,2,2);
-        simulator.addBlock(-8.9,2.6,3,0.1,0.5,2,2);
+      //green house
+      simulator.addBlock(-3, -5, 3, 6, 0.1, 2, 2);
+      simulator.addBlock(2.9, -1.7, 3, 0.1, 3.3, 2, 2);
+      simulator.addBlock(-3.8, 3.15, 3, 5.2, 0.1, 2, 2);
+      simulator.addBlock(-8.9, -2.9, 3, 0.1, 2, 2, 2);
+      simulator.addBlock(-8.9, 2.6, 3, 0.1, 0.5, 2, 2);
 
-        //avoid right
-        simulator.addBlock(-8.9,3.7,3,0.1,0.5,2,2);
-        simulator.addBlock(-3.8,7,3,5.2,0.1,2,2);
+      //avoid right
+      simulator.addBlock(-8.9, 3.7, 3, 0.1, 0.5, 2, 2);
+      simulator.addBlock(-3.8, 7, 3, 5.2, 0.1, 2, 2);
 
-        //avoid left
-        simulator.addBlock(5.6,10,3,0.1,1,2,2);
+      //avoid left
+      simulator.addBlock(5.6, 10, 3, 0.1, 1, 2, 2);
 
-        //pink house
-        simulator.addBlock(-3.8,10.9,3,5.2,0.1,2,2);
-        simulator.addBlock(1.45,9,3,0.1,2,2,2);
-    
-        //roundabout
-        Drawroundabout(4.9,5,4)
-        DrawCircle(4.9,5,0.25)
+      //pink house
+      simulator.addBlock(-3.8, 10.9, 3, 5.2, 0.1, 2, 2);
+      simulator.addBlock(1.45, 9, 3, 0.1, 2, 2, 2);
+      simulator.addHouse(10,10,2)
 
-        //dead end
-        simulator.addBlock(8.8,0.5,3,0.1,0.5,2,2);
+      //roundabout
+      Drawroundabout(4.9, 5, 4);
+      DrawCircle(4.9, 5, 0.25);
 
-        simulator.addBlock(-15,0.1,3,0.1,15,2,2);
-        simulator.addBlock(0,15,3,14.9,0.1,2,2);
-        //simulator.addLine(-3,0,3,2,2,2,2);
-        </script>
-    </body>
+      //dead end
+      simulator.addBlock(8.8, 0.5, 3, 0.1, 0.5, 2, 2);
+
+      simulator.addBlock(-15, 0.1, 3, 0.1, 15, 2, 2);
+      simulator.addBlock(0, 15, 3, 14.9, 0.1, 2, 2);
+      //simulator.addLine(-3,0,3,2,2,2,2);
+    </script>
+  </body>
 </html>
