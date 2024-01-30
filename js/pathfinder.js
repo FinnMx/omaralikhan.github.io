@@ -55,14 +55,17 @@ Pathfinder.prototype.returnNodes = function (){
  * @return {Int}
  */
 Pathfinder.prototype.getBreakingDelay = function (){
-    switch(this.nodes[this.currentNode]){
+    switch(this.nodes[this.currentNode].nodeType){
         case "Start":
             return 1500;
             break;
-        case "":
+        case "Street":
+            return 1500;
+            break;
+        case "Junction":
+            return 0;
             break;
     }
-    
 }
 
 /**
@@ -73,5 +76,7 @@ Pathfinder.prototype.getBreakingDelay = function (){
  * @param {Object} Prox
  */
 Pathfinder.prototype.makeDecision = function (prox){
+    var node = new Node();
+    node.setReturnNode(this.nodes[this.currentNode]);
 
 }

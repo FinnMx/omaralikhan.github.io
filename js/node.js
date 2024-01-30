@@ -6,6 +6,7 @@
 function Node(){
     this.nodeType;
     this.paths = [];
+    this.returnNode;
 }
 
 /**
@@ -35,4 +36,13 @@ Node.prototype.setNodeType = function(input){
  */
 Node.prototype.addPath = function(path){
     paths.push(path);
+}
+
+/**
+ *  Function to set the return Node
+ * @method setReturnNode
+ * @param {Object} returnNode
+ */
+Node.prototype.setNodeType = function(returnNode){
+    this.returnNode = returnNode;
 }
