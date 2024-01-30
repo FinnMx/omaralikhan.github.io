@@ -23,6 +23,7 @@
     <script src="js/Simulator.js"></script>
     <script src="js/node.js"></script>
     <script src="js/pathfinder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
     <script>
       //how to add meshes in THREE https://www.youtube.com/watch?v=RYWMKucBDiI&t=451s
       //https://github.com/SuboptimalEng/three-js-tutorials/blob/main/16-physics-part-02/src/App.jsx
@@ -123,8 +124,12 @@
       //BEGIN PATH FINDING
       var pathfinder = new Pathfinder();
       pathfinder.setCurrentNodeType(tracy.getProximitySensorReading());
-      tracy.startSolving();
 
+      /*
+      setTimeout(function() {
+        simulator.startSolving();
+      }, 2000);
+      */
     </script>
   </body>
 </html>

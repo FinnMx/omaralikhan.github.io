@@ -7,7 +7,7 @@ function Tracy(x,y,z)
 {
     /* Physical body of Tracy along with its corresponding shape */
     this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, 0.7,0.2));
-    this.chassisBody = new CANNON.Body({ mass: 5 });
+    this.chassisBody = new CANNON.Body({ mass: 1, linearDamping: 0.95, angularDamping: 0.95});
     this.chassisBody.position.set(x,y,z);
     this.chassisBody.quaternion.setFromAxisAngle(
         new CANNON.Vec3(0,0,1), THREE.Math.degToRad(0));
@@ -53,7 +53,7 @@ function Tracy(x,y,z)
     for(var i=0; i<this.vehicle.wheelInfos.length; i++){
         var wheel = this.vehicle.wheelInfos[i];
         var cylinderShape = new CANNON.Cylinder(wheel.radius, wheel.radius, wheel.radius / 2, 20);
-        var wheelBody = new CANNON.Body({ mass: 100, Material: Simulator.prototype.getWheelMatt() });
+        var wheelBody = new CANNON.Body({ mass: 5, Material: Simulator.prototype.getWheelMatt()});
         wheelBody.type = CANNON.Body.KINEMATIC;
         wheelBody.collisionFilterGroup = 0;
         var q = new CANNON.Quaternion();
@@ -139,21 +139,22 @@ Tracy.prototype.getMagnetometerReading = function()
     return this.chassisBody.quaternion;
 }
 
-/** 
+/**
  * Apply the a brake force to all the wheels. It is not sufficient enough
  * to set the engine force to zero as the wheels will continue to roll
  * on the surface. Therefore, use this function to fully stop the vehicle.
- * @method stop 
+ * @method stop
  */
 Tracy.prototype.stop = function()
 {
     /* Loop over all the wheels and apply a brake force to each */
     /* setBrake(force,wheelIndex) */
     for(var i=0; i<4; i++) { this.vehicle.setBrake(10,i); }
+    //this.chassisBody.position.set(this.chassisBody.position.x,this.chassisBody.position.y,3)
 }
 
 /**
- * Set the left and right motor speeds. 
+ * Set the left and right motor speeds.
  * Tracy can rotate to either side by setting one motor speed to x and the other to -x.
  * @method setMotorSpeeds
  * @param {Integer} amount of force to be applied on the right motor measured in N.
@@ -287,30 +288,5 @@ Tracy.prototype.getProximitySensorReading = function()
     sensorReadings.left = getSensorReading(180-sensorHalfAngle,180+sensorHalfAngle);
 
     return sensorReadings;
-}
-
-
-
-// -------------------------------------------------------------------------------------------------
-//                              ALL FUNCTIONS FOR SOLVING THE PUZZLE
-// -------------------------------------------------------------------------------------------------
-
-/**
- * @method startSolving
- */
-Tracy.prototype.startSolving = function(){
-
-}
-
-/**
- * @method drive
- */
-Tracy.prototype.drive = function() {
-    setTimeout(function() {
-        this.vehicle.applyEngineForce(2, 0);
-        this.vehicle.applyEngineForce(2, 1);
-        this.vehicle.applyEngineForce(2, 2);
-        this.vehicle.applyEngineForce(2, 3);
-      }, 2000);
 }
 

@@ -391,3 +391,56 @@ Simulator.prototype.handleKeyboardInput = function(event)
             }
 }
 
+
+// -------------------------------------------------------------------------------------------------
+//                              ALL FUNCTIONS FOR SOLVING THE PUZZLE
+// -------------------------------------------------------------------------------------------------
+
+/**
+ * @method startSolving
+ */
+Simulator.prototype.startSolving = function(){
+    let prevReading = robots[0].getProximitySensorReading();
+
+    Simulator.prototype.driveForward()
+    
+    var loop = setInterval(() => {
+        var currentReading = robots[0].getProximitySensorReading();
+
+        if(rtdp(prevReading.left,1) !== rtdp(currentReading.left,1)){
+            robots[0].stop();
+            clearInterval(loop);
+        }
+        prevReading = currentReading;
+    }, 50);
+
+}
+
+// Round to decimal place
+function rtdp(num, decimalPlaces) {
+    const factor = Math.pow(10, decimalPlaces);
+    return Math.round(num * factor) / factor;
+}
+
+/**
+ * @method driveForward
+ */
+Simulator.prototype.driveForward = function() {
+    robots[0].vehicle.applyEngineForce(2, 0);
+    robots[0].vehicle.applyEngineForce(2, 1);
+    robots[0].vehicle.applyEngineForce(2, 2);
+    robots[0].vehicle.applyEngineForce(2, 3);
+}
+
+ 
+/**
+ * @method driveReverse
+ */
+Simulator.prototype.driveReverse = function() {
+    robots[0].vehicle.applyEngineForce(-2, 0);
+    robots[0].vehicle.applyEngineForce(-2, 1);
+    robots[0].vehicle.applyEngineForce(-2, 2);
+    robots[0].vehicle.applyEngineForce(-2, 3);
+}
+
+
