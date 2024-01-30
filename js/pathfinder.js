@@ -16,8 +16,14 @@ function Pathfinder(){
  * @param {Object} Prox
  */
 Pathfinder.prototype.setCurrentNodeType = function (Prox){
-    if(Prox.left > 0 && Prox.right > 0 && Prox.front == 0 && Prox.back == 0){
+    if(this.currentNode == 0){
         this.nodes[this.currentNode].setNodeType("Start");
+    }else if(Prox.left > 0 && Prox.right > 0 && Prox.front == 0 && Prox.back == 0){
+        this.nodes[this.currentNode].setNodeType("Street");
+    }else if(Prox.left == 0 && Prox.right == 0 && Prox.front == 0 && Prox.back == 0){
+        this.nodes[this.currentNode].setNodeType("Junction");
+    } else if(Prox.left > 0 && prox.right > 0 && prox.front > 0){
+
     }
 }
 
@@ -44,3 +50,28 @@ Pathfinder.prototype.returnNodes = function (){
     return this.nodes;
 }
 
+/**
+ * @method getBreakingDelay
+ * @return {Int}
+ */
+Pathfinder.prototype.getBreakingDelay = function (){
+    switch(this.nodes[this.currentNode]){
+        case "Start":
+            return 1500;
+            break;
+        case "":
+            break;
+    }
+    
+}
+
+/**
+ * - Function that is responsible for the zumo to "make a decision",
+ * chooses what path to follow depending on whats already been explored
+ * & where we are going.
+ * @method makeDecision
+ * @param {Object} Prox
+ */
+Pathfinder.prototype.makeDecision = function (prox){
+
+}

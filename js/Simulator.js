@@ -403,17 +403,19 @@ Simulator.prototype.startSolving = function(){
     let prevReading = robots[0].getProximitySensorReading();
     Simulator.prototype.driveForward();
 
-    //start checking for obsticles/ends of streets
+    //start checking for obstacles/ends of streets
     var loop = setInterval(() => {
         var currentReading = robots[0].getProximitySensorReading();
 
-        if(rtdp(prevReading.left,1) !== rtdp(currentReading.left,1)){
-            Simulator.prototype.driveStop(1500);
+        if(rtdp(prevReading.left,1) !== rtdp(currentReading.left,1) ||
+           rtdp(prevReading.right,1) !== rtdp(currentReading.right,1) ||
+           rtdp(prevReading.front,1) !== rtdp(currentReading.front,1)){
+            Simulator.prototype.driveStop();
             clearInterval(loop);
+            pathfinder.make
         }
         prevReading = currentReading;
     }, 50);
-
 }
 
 // Round to decimal place
