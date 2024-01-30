@@ -401,14 +401,14 @@ Simulator.prototype.handleKeyboardInput = function(event)
  */
 Simulator.prototype.startSolving = function(){
     let prevReading = robots[0].getProximitySensorReading();
+    Simulator.prototype.driveForward();
 
-    Simulator.prototype.driveForward()
-    
+    //start checking for obsticles/ends of streets
     var loop = setInterval(() => {
         var currentReading = robots[0].getProximitySensorReading();
 
         if(rtdp(prevReading.left,1) !== rtdp(currentReading.left,1)){
-            robots[0].stop();
+            Simulator.prototype.driveStop(1500);
             clearInterval(loop);
         }
         prevReading = currentReading;
@@ -426,13 +426,37 @@ function rtdp(num, decimalPlaces) {
  * @method driveForward
  */
 Simulator.prototype.driveForward = function() {
-    robots[0].vehicle.applyEngineForce(2, 0);
-    robots[0].vehicle.applyEngineForce(2, 1);
     robots[0].vehicle.applyEngineForce(2, 2);
     robots[0].vehicle.applyEngineForce(2, 3);
 }
 
- 
+/**
+ * @method driveStop
+ * @param {Int} timeout
+ */
+Simulator.prototype.driveStop = function(timeout) {
+    setTimeout(function() {
+        robots[0].vehicle.applyEngineForce(0, 0);
+        robots[0].vehicle.applyEngineForce(0, 1);
+        robots[0].vehicle.applyEngineForce(0, 2);
+        robots[0].vehicle.applyEngineForce(0, 3);
+    }, timeout);
+}
+
+/**
+ * @method driveTurnLeft
+ * @param {Int} degrees
+ */
+Simulator.prototype.driveTurnLeft = function(degrees){
+    robots[0].vehicle.applyEngineForce(-5, 1);
+    robots[0].vehicle.applyEngineForce(-5, 3);
+    robots[0].vehicle.applyEngineForce(5, 0);
+    robots[0].vehicle.applyEngineForce(5, 2);
+    setTimeout(function (){
+        Simulator.prototype.driveStop(0);
+    }, 17.3 * degrees); // 17.3 is how many ms it takes to turn 1 degree.
+}
+
 /**
  * @method driveReverse
  */
