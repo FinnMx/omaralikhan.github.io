@@ -10,7 +10,7 @@ function Tracy(x,y,z)
     this.chassisBody = new CANNON.Body({ mass: 5 });
     this.chassisBody.position.set(x,y,z);
     this.chassisBody.quaternion.setFromAxisAngle(
-        new CANNON.Vec3(0,0,1), THREE.Math.degToRad(180));
+        new CANNON.Vec3(0,0,1), THREE.Math.degToRad(0));
     this.chassisBody.addShape(this.chassisShape);
 
     /* Settings supported by Cannon JS RaycastVehicle class */
@@ -30,6 +30,7 @@ function Tracy(x,y,z)
         customSlidingRotationalSpeed: -30,
         useCustomSlidingRotationalSpeed: true
     };
+    var wheelMaterial = new CANNON.Material("wheelMaterial");
 
     /* Create the vehicle and assign its chassisBody */
     this.vehicle = new CANNON.RaycastVehicle({ chassisBody: this.chassisBody });
@@ -52,7 +53,7 @@ function Tracy(x,y,z)
     for(var i=0; i<this.vehicle.wheelInfos.length; i++){
         var wheel = this.vehicle.wheelInfos[i];
         var cylinderShape = new CANNON.Cylinder(wheel.radius, wheel.radius, wheel.radius / 2, 20);
-        var wheelBody = new CANNON.Body({ mass: 100 });
+        var wheelBody = new CANNON.Body({ mass: 100, Material: Simulator.prototype.getWheelMatt() });
         wheelBody.type = CANNON.Body.KINEMATIC;
         wheelBody.collisionFilterGroup = 0;
         var q = new CANNON.Quaternion();
@@ -288,4 +289,28 @@ Tracy.prototype.getProximitySensorReading = function()
     return sensorReadings;
 }
 
+
+
+// -------------------------------------------------------------------------------------------------
+//                              ALL FUNCTIONS FOR SOLVING THE PUZZLE
+// -------------------------------------------------------------------------------------------------
+
+/**
+ * @method startSolving
+ */
+Tracy.prototype.startSolving = function(){
+
+}
+
+/**
+ * @method drive
+ */
+Tracy.prototype.drive = function() {
+    setTimeout(function() {
+        this.vehicle.applyEngineForce(2, 0);
+        this.vehicle.applyEngineForce(2, 1);
+        this.vehicle.applyEngineForce(2, 2);
+        this.vehicle.applyEngineForce(2, 3);
+      }, 2000);
+}
 

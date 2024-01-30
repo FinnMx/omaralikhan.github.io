@@ -112,21 +112,8 @@ Simulator.prototype.initialiseWorld = function(gravity, friction)
     world.defaultContactMaterial.friction = friction;
 
     /* Create materials which help define the interaction between different objects in the world */
-    var groundMaterial = new CANNON.Material("groundMaterial");
-    var wheelMaterial = new CANNON.Material("wheelMaterial");
-
-    /* Define the properties of the wheel to ground interaction */
-    var wheelGroundContactMaterial = new CANNON.ContactMaterial(wheelMaterial, groundMaterial, {
-        friction: 0.3,
-        restitution: 0.5,
-        contactEquationStiffness: 1e8,
-        contactEquationRelaxation: 3,
-        frictionEquationStiffness: 1e8,
-        frictionEquationRegularizationTime: 3
-    });
-
-    /* Add the material to the world */
-    world.addContactMaterial(wheelGroundContactMaterial);
+    this.createMaterials();
+    
 
     /* Add an event listener to update the wheels after every step in Cannon JS */
     world.addEventListener('postStep', function(){
@@ -145,6 +132,41 @@ Simulator.prototype.initialiseWorld = function(gravity, friction)
     });
 }
 
+/** 
+@method createMaterials
+*/
+Simulator.prototype.createMaterials = function(){
+this.groundMaterial = new CANNON.Material("groundMaterial");
+this.wheelMaterial = new CANNON.Material("wheelMaterial");
+
+/* Define the properties of the wheel to ground interaction */
+var wheelGroundContactMaterial = new CANNON.ContactMaterial(this.wheelMaterial, this.groundMaterial, {
+    friction: 100,
+    restitution: 100
+});
+
+/* Add the material to the world */
+world.addContactMaterial(wheelGroundContactMaterial);
+console.log(wheelGroundContactMaterial);
+
+}
+
+/** 
+@method getGroundMatt
+@return {Object}
+*/
+Simulator.prototype.getGroundMatt = function(){
+    console.log(this.groundMaterial);
+    return this.groundMaterial;
+}
+/** 
+@method getWheelMatt
+@return {Object}
+*/
+Simulator.prototype.getWheelMatt = function(){
+    return this.wheelMaterial;
+}
+
 /**
  * Creates a floor grid containing rows by columns number of tiles.
  * Each tile is of size 1 and is created as a static body.
@@ -160,8 +182,9 @@ Simulator.prototype.createFloorGrid = function(rows,columns)
 
     /* Create heightfield using the data generated. */
     var shape = new CANNON.Heightfield(heightfieldData, {elementSize:1});
+
     /* Set mass to 0 to make the ground static allowing it to ignore gravity. */
-    var body = new CANNON.Body({ mass: 0 });
+    var body = new CANNON.Body({ mass: 0, Material: this.groundMaterial });
     body.addShape(shape);
 
     /* Calculate the x,y coordinates required to center the grid in the world */

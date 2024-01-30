@@ -21,6 +21,8 @@
     <script src="lib/Detector.js"></script>
     <script src="js/Tracy.js"></script>
     <script src="js/Simulator.js"></script>
+    <script src="js/node.js"></script>
+    <script src="js/pathfinder.js"></script>
     <script>
       //how to add meshes in THREE https://www.youtube.com/watch?v=RYWMKucBDiI&t=451s
       //https://github.com/SuboptimalEng/three-js-tutorials/blob/main/16-physics-part-02/src/App.jsx
@@ -36,7 +38,6 @@
             x1 = r * Math.cos((angle * PI) / 180);
             y1 = r * Math.sin((angle * PI) / 180);
             simulator.addBlock(x + x1, y + y1, 3, 0.1, 0.1, 2, 2);
-            //putpixel(x + x1, y + y1, color);
           }
         }
       }
@@ -52,8 +53,10 @@
           simulator.addBlock(x + x1, y + y1, 3, 0.1, 0.1, 2, 2);
         }
       }
+
+
       var simulator = new Simulator();
-      var tracy = new Tracy(14, -6.8, 3);
+      var tracy = new Tracy(14, -7, 3);
       simulator.addTracy(tracy);
 
       //definitions of the maze
@@ -69,18 +72,22 @@
       simulator.addBlock(11.9, -9, 3, 3, 0.1, 2, 2);
       simulator.addBlock(8.8, -9.4, 3, 0.1, 0.5, 2, 2);
       simulator.addBlock(8.8, -13.9, 3, 0.1, 1, 2, 2);
+      simulator.addHouse(13.5,-13,2)
 
       //blue house
       simulator.addBlock(11.9, -5, 3, 3, 0.1, 2, 2);
       simulator.addBlock(8.8, -4.1, 3, 0.1, 1, 2, 2);
       simulator.addBlock(11.9, 0.9, 3, 3, 0.1, 2, 2);
       simulator.addBlock(8.8, 6, 3, 0.1, 5, 2, 2);
+      simulator.addHouse(13.5,-3,2)
+
 
       //yellow house
       simulator.addBlock(-3, -9, 3, 6, 0.1, 2, 2);
       simulator.addBlock(2.9, -12, 3, 0.1, 2.9, 2, 2);
       simulator.addBlock(-8.9, -13.9, 3, 0.1, 1, 2, 2);
       simulator.addBlock(-8.9, -9.6, 3, 0.1, 0.5, 2, 2);
+      simulator.addHouse(0,-13,2)
 
       //green house
       simulator.addBlock(-3, -5, 3, 6, 0.1, 2, 2);
@@ -88,6 +95,7 @@
       simulator.addBlock(-3.8, 3.15, 3, 5.2, 0.1, 2, 2);
       simulator.addBlock(-8.9, -2.9, 3, 0.1, 2, 2, 2);
       simulator.addBlock(-8.9, 2.6, 3, 0.1, 0.5, 2, 2);
+      simulator.addHouse(0,-2,2)
 
       //avoid right
       simulator.addBlock(-8.9, 3.7, 3, 0.1, 0.5, 2, 2);
@@ -99,7 +107,7 @@
       //pink house
       simulator.addBlock(-3.8, 10.9, 3, 5.2, 0.1, 2, 2);
       simulator.addBlock(1.45, 9, 3, 0.1, 2, 2, 2);
-      simulator.addHouse(10,10,2)
+      simulator.addHouse(-1,9,2)
 
       //roundabout
       Drawroundabout(4.9, 5, 4);
@@ -110,7 +118,13 @@
 
       simulator.addBlock(-15, 0.1, 3, 0.1, 15, 2, 2);
       simulator.addBlock(0, 15, 3, 14.9, 0.1, 2, 2);
-      //simulator.addLine(-3,0,3,2,2,2,2);
+      
+
+      //BEGIN PATH FINDING
+      var pathfinder = new Pathfinder();
+      pathfinder.setCurrentNodeType(tracy.getProximitySensorReading());
+      tracy.startSolving();
+
     </script>
   </body>
 </html>
