@@ -125,9 +125,28 @@
       var pathfinder = new Pathfinder();
       pathfinder.setCurrentNodeType(tracy.getProximitySensorReading());
 
+
+      // REWRITE PATHFINDER AND USE THESE JS STYLE FUNCTION POINTERS
+      var foobar = {};
+      foobar[0] = function() {
+        robots[0].vehicle.applyEngineForce(2, 2);
+        robots[0].vehicle.applyEngineForce(2, 3);
+      };
+      foobar[1] = function() {
+        robots[0].vehicle.applyEngineForce(-2, 0);
+        robots[0].vehicle.applyEngineForce(-2, 1);
+        robots[0].vehicle.applyEngineForce(-2, 2);
+        robots[0].vehicle.applyEngineForce(-2, 3);
+      };
+      foobar[2] = function() {
+        robots[0].vehicle.applyEngineForce(2, 2);
+        robots[0].vehicle.applyEngineForce(2, 3);
+      };
+      /*
       setTimeout(function() {
         simulator.startSolving();
       }, 2000);
+      */
     </script>
   </body>
 </html>

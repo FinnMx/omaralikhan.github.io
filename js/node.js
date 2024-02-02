@@ -43,6 +43,6 @@ Node.prototype.addPath = function(path){
  * @method setReturnNode
  * @param {Object} returnNode
  */
-Node.prototype.setNodeType = function(returnNode){
+Node.prototype.setReturnNode = function(returnNode){
     this.returnNode = returnNode;
 }
