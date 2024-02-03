@@ -3,10 +3,10 @@
  * @class Simulator
  * @constructor
  */
-function Node(){
-    this.nodeType;
-    this.paths = [];
-    this.returnNode;
+function Node(prox, isStart){
+    this.isStart = isStart;
+    this.nodeType = this.setType(prox);
+
 }
 
 /**
@@ -21,12 +21,19 @@ Node.prototype.getNodeType = function(){
 }
 
 /**
- *  Function to set the Node type
- * @method setNodeType
- * @param {String} input
+ * @method setType
+ * @param {Object} prox
  */
-Node.prototype.setNodeType = function(input){
-    this.nodeType = input;
+Node.prototype.setType = function(prox){
+    if(this.isStart){
+        return "Start";
+    }else if(prox.left > 0 && prox.right > 0 && prox.front == 0 && prox.back == 0){
+        return "Street";
+    }else if(prox.left == 0 && prox.right == 0 && prox.front == 0 && prox.back == 0){
+        return "Junction";
+    } else if(prox.left > 0 && prox.right > 0 && prox.front > 0){
+
+    }
 }
 
 /**

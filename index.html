@@ -23,6 +23,7 @@
     <script src="js/Simulator.js"></script>
     <script src="js/node.js"></script>
     <script src="js/pathfinder.js"></script>
+    <script src="js/path.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
     <script>
       var mazeSolved = false;
@@ -123,10 +124,10 @@
 
       //BEGIN PATH FINDING
       var pathfinder = new Pathfinder();
-      pathfinder.setCurrentNodeType(tracy.getProximitySensorReading());
 
 
       // REWRITE PATHFINDER AND USE THESE JS STYLE FUNCTION POINTERS
+      /*
       var foobar = {};
       foobar[0] = function() {
         robots[0].vehicle.applyEngineForce(2, 2);
@@ -142,11 +143,10 @@
         robots[0].vehicle.applyEngineForce(2, 2);
         robots[0].vehicle.applyEngineForce(2, 3);
       };
-      /*
+      */
       setTimeout(function() {
         simulator.startSolving();
       }, 2000);
-      */
     </script>
   </body>
 </html>

@@ -410,15 +410,19 @@ Simulator.prototype.startSolving = function(){
         var loop = setInterval(() => {
             var currentReading = robots[0].getProximitySensorReading();
 
-            if(rtdp(prevReading.left,1) !== rtdp(currentReading.left,1) ||
-            rtdp(prevReading.right,1) !== rtdp(currentReading.right,1) ||
-            rtdp(prevReading.front,1) !== rtdp(currentReading.front,1)){
+            if(isChange(prevReading,currentReading)){
                 Simulator.prototype.driveStop(pathfinder.getBreakingDelay());
                 pathfinder.makeDecision(currentReading);
                 clearInterval(loop);
             }
             prevReading = currentReading;
         }, 50);
+}
+
+function isChange(prevReading,currentReading){
+    return rtdp(prevReading.left,1) !== rtdp(currentReading.left,1) ||
+    rtdp(prevReading.right,1) !== rtdp(currentReading.right,1) ||
+    rtdp(prevReading.front,1) !== rtdp(currentReading.front,1);
 }
 
 // Round to decimal place
