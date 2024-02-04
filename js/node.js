@@ -41,15 +41,6 @@ Node.prototype.setType = function(prox){
 }
 
 /**
- * Function to add a new path to a node
- * @method addPath
- * @param {Object} path
- */
-Node.prototype.addPath = function(path){
-    paths.push(path);
-}
-
-/**
  *  Function to set the return Node
  * @method setReturnNode
  * @param {Object} returnNode

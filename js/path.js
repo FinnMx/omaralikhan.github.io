@@ -37,7 +37,6 @@ Path.prototype.getInstructionSetSize = function(){
  * @param {Object} prox
  */
 Path.prototype.addNode = function(prox){
-    console.log(prox);
     var node = new Node(prox, false);
     this.nodes.push(node);
 }
