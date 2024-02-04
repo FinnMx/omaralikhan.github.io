@@ -129,10 +129,11 @@
       // REWRITE PATHFINDER AND USE THESE JS STYLE FUNCTION POINTERS
       /*
       var foobar = {};
-      foobar[0] = function() {
+      var k = function() {
         robots[0].vehicle.applyEngineForce(2, 2);
         robots[0].vehicle.applyEngineForce(2, 3);
       };
+      foobar[0] = k;
       foobar[1] = function() {
         robots[0].vehicle.applyEngineForce(-2, 0);
         robots[0].vehicle.applyEngineForce(-2, 1);
