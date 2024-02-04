@@ -147,7 +147,6 @@ var wheelGroundContactMaterial = new CANNON.ContactMaterial(this.wheelMaterial, 
 
 /* Add the material to the world */
 world.addContactMaterial(wheelGroundContactMaterial);
-console.log(wheelGroundContactMaterial);
 
 }
 
@@ -156,7 +155,6 @@ console.log(wheelGroundContactMaterial);
 @return {Object}
 */
 Simulator.prototype.getGroundMatt = function(){
-    console.log(this.groundMaterial);
     return this.groundMaterial;
 }
 /** 
@@ -411,8 +409,11 @@ Simulator.prototype.startSolving = function(){
             var currentReading = robots[0].getProximitySensorReading();
 
             if(isChange(prevReading,currentReading)){
-                Simulator.prototype.driveStop(pathfinder.getBreakingDelay());
-                pathfinder.makeDecision(currentReading);
+                setTimeout(function() {
+                    Simulator.prototype.driveStop(pathfinder.getBreakingDelay());
+                    pathfinder.makeDecision(robots[0].getProximitySensorReading());
+                 }, pathfinder.getBreakingDelay());
+                 
                 clearInterval(loop);
             }
             prevReading = currentReading;
@@ -443,13 +444,11 @@ Simulator.prototype.driveForward = function() {
  * @method driveStop
  * @param {Int} timeout
  */
-Simulator.prototype.driveStop = function(timeout) {
-    setTimeout(function() {
+Simulator.prototype.driveStop = function() {
         robots[0].vehicle.applyEngineForce(0, 0);
         robots[0].vehicle.applyEngineForce(0, 1);
         robots[0].vehicle.applyEngineForce(0, 2);
         robots[0].vehicle.applyEngineForce(0, 3);
-    }, timeout);
 }
 
 /**

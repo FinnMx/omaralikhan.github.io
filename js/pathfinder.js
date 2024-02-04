@@ -9,22 +9,10 @@ function Pathfinder(){
 }
 
 /**
- * - Function that returns a list of all the nodes,
- * useful to see the finalised memory of the zumos maze
- * interpretation.
- * @method returnCurrentNode
- * @return {Object}
- */
-Pathfinder.prototype.returnCurrentNode = function (){
-    return this.nodes[this.currentNode];
-}
-
-/**
  * @method getBreakingDelay
  * @return {Int}
  */
 Pathfinder.prototype.getBreakingDelay = function (){
-    console.log(this.currentPath.getCurrentNodeType());
     switch(this.currentPath.getCurrentNodeType()){
         case "Start":
             return 1500;
@@ -46,5 +34,18 @@ Pathfinder.prototype.getBreakingDelay = function (){
  * @param {Object} Prox
  */
 Pathfinder.prototype.makeDecision = function (prox){
+    this.currentPath.addNode(prox)
+    
 
+}
+
+/**
+ * - Function that is responsible for checking if a the route we want to follow
+ * has been fully explored or not
+ * @method chooseTurn
+ * @param {Object} Prox
+ */
+Pathfinder.prototype.chooseTurn = function (){
+    this.currentPath.
+    
 }

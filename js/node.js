@@ -31,8 +31,12 @@ Node.prototype.setType = function(prox){
         return "Street";
     }else if(prox.left == 0 && prox.right == 0 && prox.front == 0 && prox.back == 0){
         return "Junction";
-    } else if(prox.left > 0 && prox.right > 0 && prox.front > 0){
-
+    }else if(prox.left > 0 && prox.right > 0 && prox.front > 0){
+        return "End";
+    }else if(prox.right > 0 && prox.front > 0 && prox.left == 0){
+        return "EntranceLeft";
+    }else if (prox.left > 0 && prox.front > 0 && prox.right == 0){
+        return "EntranceRight";
     }
 }
 
