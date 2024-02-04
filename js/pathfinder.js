@@ -35,17 +35,33 @@ Pathfinder.prototype.getBreakingDelay = function (){
  */
 Pathfinder.prototype.makeDecision = function (prox){
     this.currentPath.addNode(prox)
-    
+    this.chooseAction();
 
 }
 
 /**
- * - Function that is responsible for checking if a the route we want to follow
- * has been fully explored or not
- * @method chooseTurn
- * @param {Object} Prox
+ * - Function that is responsible for not going over the same route again,
+ * ADD ROUTE CHECKING!!!!!!!
+ * @method chooseAction
  */
-Pathfinder.prototype.chooseTurn = function (){
-    this.currentPath.
+Pathfinder.prototype.chooseAction = function (){
+    switch(this.currentPath.getCurrentNodeType()){
+        case "Junction":
+            break;
+        case "EntranceLeft":
+            break;
+        case "EntranceRight":
+            break;
+        case "End":
+            this.returnToStart();
+            break;
+    }
     
+}
+
+/**
+ * @method returnToStart
+ */
+Pathfinder.prototype.returnToStart = function (){
+
 }

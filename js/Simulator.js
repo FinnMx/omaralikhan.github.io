@@ -466,6 +466,20 @@ Simulator.prototype.driveTurnLeft = function(degrees){
 }
 
 /**
+ * @method driveTurnRight
+ * @param {Int} degrees
+ */
+Simulator.prototype.driveTurnRight = function(degrees){
+    robots[0].vehicle.applyEngineForce(5, 1);
+    robots[0].vehicle.applyEngineForce(5, 3);
+    robots[0].vehicle.applyEngineForce(-5, 0);
+    robots[0].vehicle.applyEngineForce(-5, 2);
+    setTimeout(function (){
+        Simulator.prototype.driveStop();
+    }, 17.3 * degrees); // 17.3 is how many ms it takes to turn 1 degree.
+}
+
+/**
  * @method driveReverse
  */
 Simulator.prototype.driveReverse = function() {

@@ -33,6 +33,15 @@ Path.prototype.getInstructionSetSize = function(){
 
 /**
  *  Function to return length of instructionSet
+ * @method addInstruction
+ * @param {Object} instruction
+ */
+Path.prototype.addInstruction = function(instruction){
+    this.instructionSet[(Object.keys(this.instructionSet).length) - 1] = instruction;
+}
+
+/**
+ *  Function to return length of instructionSet
  * @method addNode
  * @param {Object} prox
  */
