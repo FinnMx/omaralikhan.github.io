@@ -35,8 +35,10 @@ Pathfinder.prototype.getBreakingDelay = function (){
  */
 Pathfinder.prototype.makeDecision = function (prox){
     this.currentPath.addNode(prox)
-    this.chooseAction();
-    simulator.startSolving();
+        this.chooseAction();
+    setTimeout(function() {
+        simulator.startSolving();
+    }, 2000);
 
 }
 
@@ -49,7 +51,6 @@ Pathfinder.prototype.chooseAction = function (){
     switch(this.currentPath.getCurrentNodeType()){
         case "Junction":
             this.currentPath.addInstruction(simulator.driveTurnLeft(90));
-            console.log(this.currentPath.instructionSet);
             break;
         case "EntranceLeft":
             break;
