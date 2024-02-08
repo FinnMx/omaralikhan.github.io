@@ -49,21 +49,26 @@ Pathfinder.prototype.makeDecision = function (prox){
  * @method chooseAction
  */
 Pathfinder.prototype.chooseAction = function (){
+    console.log(this.currentPath.getCurrentNodeType());
     switch(this.currentPath.getCurrentNodeType()){
         case "Junction":
+            simulator.driveStop();
             this.currentPath.addInstruction("LEFT");
             this.instructionLookUp(this.currentPath.getCurrentInstruction(), false);
             break;
         case "EntranceLeft":
+            simulator.driveStop();
             this.currentPath.addInstruction("LEFT");
             this.instructionLookUp(this.currentPath.getCurrentInstruction(), false);
             break;
         case "Street":
             break;
         case "EntranceRight":
+            simulator.driveStop();
             this.currentPath.addInstruction("RIGHT");
             break;
         case "End":
+            simulator.driveStop();
             this.returnToStart();
             break;
     }
@@ -100,7 +105,6 @@ Pathfinder.prototype.instructionLookUp = function (instruction, inverse){
  */
 Pathfinder.prototype.returnToStart = function (){
     simulator.returnToStart();
-    console.log("balls");
 
     this.paths.push(this.currentPath);
 }

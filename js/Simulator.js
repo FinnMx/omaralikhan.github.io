@@ -410,14 +410,13 @@ Simulator.prototype.startSolving = function(){
 
             if(isChange(prevReading,currentReading)){  
                 setTimeout(function() {
-                    Simulator.prototype.driveStop();
                     pathfinder.makeDecision(robots[0].getProximitySensorReading());
                  }, pathfinder.getBreakingDelay());
                  
                 clearInterval(loop);
             }
             prevReading = currentReading;
-        }, 50);
+        }, 10);
 }
 
 /**
@@ -433,7 +432,6 @@ Simulator.prototype.returnToStart = function (){
 
         if(isChange(prevReading,currentReading)){
             setTimeout(function() {
-                Simulator.prototype.driveStop();
                 pathfinder.makeDecision(robots[0].getProximitySensorReading());
              }, pathfinder.getBreakingDelay());
              
