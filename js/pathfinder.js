@@ -34,12 +34,13 @@ Pathfinder.prototype.getBreakingDelay = function (){
  * @param {Object} Prox
  */
 Pathfinder.prototype.makeDecision = function (prox){
-    this.currentPath.addNode(prox)
-        this.chooseAction();
+    //console.log(prox);
+    this.currentPath.addNode(prox);
+    console.log(this.currentPath.nodes);
+    this.chooseAction();
     setTimeout(function() {
         simulator.startSolving();
     }, 2000);
-
 }
 
 /**
@@ -50,22 +51,56 @@ Pathfinder.prototype.makeDecision = function (prox){
 Pathfinder.prototype.chooseAction = function (){
     switch(this.currentPath.getCurrentNodeType()){
         case "Junction":
-            this.currentPath.addInstruction(simulator.driveTurnLeft(90));
+            this.currentPath.addInstruction("LEFT");
+            this.instructionLookUp(this.currentPath.getCurrentInstruction(), false);
             break;
         case "EntranceLeft":
+            this.currentPath.addInstruction("LEFT");
+            this.instructionLookUp(this.currentPath.getCurrentInstruction(), false);
+            break;
+        case "Street":
             break;
         case "EntranceRight":
+            this.currentPath.addInstruction("RIGHT");
             break;
         case "End":
             this.returnToStart();
             break;
     }
-    
+}
+
+/**
+ * - Function that is responsible looking up and performing turns
+ * @method instructionLookUp
+ */
+Pathfinder.prototype.instructionLookUp = function (instruction, inverse){
+    if(inverse==false){
+        switch(instruction){
+            case "LEFT":
+                simulator.driveTurnLeft(90);
+                break;
+            case "RIGHT":
+                simulator.driveTurnRight(90);
+                break;
+        }
+    }else if(inverse==true){
+        switch(instruction){
+            case "LEFT":
+                simulator.driveTurnRight(90);
+                break;
+            case "RIGHT":
+                simulator.driveTurnLeft(90);
+                break;
+        }
+    }
 }
 
 /**
  * @method returnToStart
  */
 Pathfinder.prototype.returnToStart = function (){
+    simulator.returnToStart();
+    console.log("balls");
 
+    this.paths.push(this.currentPath);
 }

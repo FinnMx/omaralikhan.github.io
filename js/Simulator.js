@@ -410,7 +410,7 @@ Simulator.prototype.startSolving = function(){
 
             if(isChange(prevReading,currentReading)){
                 setTimeout(function() {
-                    Simulator.prototype.driveStop(pathfinder.getBreakingDelay());
+                    Simulator.prototype.driveStop();
                     pathfinder.makeDecision(robots[0].getProximitySensorReading());
                  }, pathfinder.getBreakingDelay());
                  
@@ -420,7 +420,34 @@ Simulator.prototype.startSolving = function(){
         }, 50);
 }
 
+/**
+ * - MAKE THIS WORK!
+ * @method returnToStart
+ */
+Simulator.prototype.returnToStart = function (){
+    let prevReading = robots[0].getProximitySensorReading();
+    Simulator.prototype.driveReverse();
+
+    var loop = setInterval(() => {
+        var currentReading = robots[0].getProximitySensorReading();
+
+        if(isChange(prevReading,currentReading)){
+            setTimeout(function() {
+                Simulator.prototype.driveStop();
+                pathfinder.makeDecision(robots[0].getProximitySensorReading());
+             }, pathfinder.getBreakingDelay());
+             
+            clearInterval(loop);
+        }
+        prevReading = currentReading;
+    }, 50);
+
+}
+
 function isChange(prevReading,currentReading){
+    if(prevReading.left == 0 || prevReading.right == 0){
+        return 0;
+    }
     return rtdp(prevReading.left,1) !== rtdp(currentReading.left,1) ||
     rtdp(prevReading.right,1) !== rtdp(currentReading.right,1) ||
     rtdp(prevReading.front,1) !== rtdp(currentReading.front,1);

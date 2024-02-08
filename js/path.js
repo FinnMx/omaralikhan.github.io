@@ -5,7 +5,7 @@
  */
 function Path(){
     this.nodes = [];
-    this.instructionSet = {};
+    this.instructionSet = [];
 
     var startNode = new Node(tracy.getProximitySensorReading(), true);
     this.nodes.push(startNode);
@@ -33,11 +33,19 @@ Path.prototype.getInstructionSetSize = function(){
 
 /**
  *  Function to return length of instructionSet
+ * @method getCurrentInstruction
+ */
+Path.prototype.getCurrentInstruction = function(){
+    return this.instructionSet[this.instructionSet.length - 1]
+}
+
+/**
+ *  Function to return length of instructionSet
  * @method addInstruction
- * @param {Object} instruction
+ * @param {String} instruction
  */
 Path.prototype.addInstruction = function(instruction){
-    this.instructionSet[(Object.keys(this.instructionSet).length)] = instruction;
+    this.instructionSet.push(instruction);
 }
 
 /**
