@@ -408,7 +408,7 @@ Simulator.prototype.startSolving = function(){
         var loop = setInterval(() => {
             var currentReading = robots[0].getProximitySensorReading();
 
-            if(isChange(prevReading,currentReading)){
+            if(isChange(prevReading,currentReading)){  
                 setTimeout(function() {
                     Simulator.prototype.driveStop();
                     pathfinder.makeDecision(robots[0].getProximitySensorReading());
